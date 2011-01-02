@@ -1300,7 +1300,7 @@ http://cvs.savannah.gnu.org/viewvc/*checkout*/bm/bm/bm.el"
   (flet ((gotoline (numline)
            (goto-char (point-min)) (forward-line (1- numline))))
     (if (or (eq major-mode 'org-mode)
-            outline-minor-mode)
+            (find 'outline-minor-mode minor-mode-list))
         (progn
           (gotoline lineno)
           (org-reveal))
