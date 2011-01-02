@@ -2228,12 +2228,13 @@ the real value in a text property."
     (put-text-property start (point) 'face anything-header-face)))
 
 
-(defun anything-insert-candidate-separator ()
+(defun anything-insert-candidate-separator (&optional insert-function)
   "Insert separator of candidates into the anything buffer."
-  (insert anything-candidate-separator)
+  (unless insert-function (setq insert-function 'insert))
+  (funcall insert-function anything-candidate-separator)
   (put-text-property (point-at-bol)
                      (point-at-eol) 'anything-candidate-separator t)
-  (insert "\n"))
+  (funcall insert-function "\n"))
 
 
 
@@ -2268,7 +2269,8 @@ the real value in a text property."
     (if (not (assq 'multiline source))
         (anything-insert-match candidate 'insert-before-markers source)
       (let ((start (point)))
-        (anything-insert-candidate-separator)
+        (unless (= (cdr (assoc 'item-count source)) 0)
+          (anything-insert-candidate-separator 'insert-before-markers))
         (anything-insert-match candidate 'insert-before-markers source)
         (put-text-property start (point) 'anything-multiline t)))
     (incf (cdr (assoc 'item-count source)))
