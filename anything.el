@@ -2293,9 +2293,11 @@ the real value in a text property."
   (anything-maybe-fit-frame)
   (anything-log-run-hook 'anything-update-hook)
   (save-selected-window
-    (select-window (get-buffer-window anything-buffer 'visible))
-    (anything-skip-noncandidate-line 'next)
-    (anything-mark-current-line)))
+    (let ((window (get-buffer-window anything-buffer 'visible)))
+      (when (window-live-p window)
+        (select-window window)
+        (anything-skip-noncandidate-line 'next)
+        (anything-mark-current-line)))))
 
 
 (defun anything-kill-async-processes ()
