@@ -2461,9 +2461,9 @@ UNIT and DIRECTION."
       (setq mode-line-format
             '(" " mode-line-buffer-identification " "
               (line-number-mode "L%l") " " (anything-follow-mode "(F) ")
-              (:eval (anything-show-candidate-number
-                      (when (listp anything-mode-line-string)
-                        (car anything-mode-line-string))))
+              ;; (:eval (anything-show-candidate-number
+              ;;         (when (listp anything-mode-line-string)
+              ;;           (car anything-mode-line-string))))
               " " anything-mode-line-string-real "-%-")
             anything-mode-line-string-real
             (substitute-command-keys (if (listp anything-mode-line-string)
