@@ -1948,7 +1948,7 @@ buffer that is not the current buffer."
 
 (defun anything-c-highlight-buffers (buffers)
   (loop for i in buffers
-     for buf = (get-buffer i)
+     for buf =  (get-buffer (if (consp i) (cdr i) i))
      for bfname = (buffer-file-name buf)
      collect
      (cond (;; A dired buffer.
@@ -1989,7 +1989,7 @@ buffer that is not the current buffer."
             (propertize i 'face 'font-lock-type-face
                         'help-echo bfname))
            ;; Any non--file buffer.
-           (t (propertize i 'face 'italic)))))
+           (t (propertize (if (consp i) (cdr i) i) 'face 'italic)))))
 
 (defvar anything-buffer-mode-line-string
   '("Buffer(s)"
